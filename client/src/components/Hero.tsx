@@ -1,6 +1,16 @@
 import { motion } from "framer-motion";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
+  const [isLoaded, setIsLoaded] = useState(false);
+  
+  // Initial animation effect
+  useEffect(() => {
+    setTimeout(() => {
+      setIsLoaded(true);
+    }, 300);
+  }, []);
+
   // Enhanced floating icons with more variety
   const floatingIcons = [
     { 
@@ -62,9 +72,51 @@ export default function Hero() {
     }
   ];
 
+  // Interactive background elements
+  const backgroundElements = [
+    { size: 'w-40 h-40', top: '10%', left: '5%', color: 'from-primary/10 to-primary/5', delay: 0.1 },
+    { size: 'w-64 h-64', bottom: '10%', right: '5%', color: 'from-secondary/10 to-secondary/5', delay: 0.3 },
+    { size: 'w-32 h-32', top: '40%', right: '25%', color: 'from-accent/10 to-accent/5', delay: 0.5 },
+    { size: 'w-56 h-56', bottom: '30%', left: '15%', color: 'from-gray-200 to-gray-100/50', delay: 0.7 },
+  ];
+
   return (
-    <section className="pt-32 pb-20 px-4 relative overflow-hidden">
-      <div className="container mx-auto max-w-4xl text-center relative z-0">
+    <section className="pt-32 pb-20 px-4 relative overflow-hidden min-h-screen flex items-center">
+      {/* Animated background elements */}
+      <div className="fixed inset-0 -z-10">
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-gray-50 via-gray-50 to-gray-100"></div>
+        
+        {backgroundElements.map((el, index) => (
+          <motion.div 
+            key={index}
+            className={`absolute ${el.size} rounded-full bg-gradient-to-br ${el.color} blur-3xl`}
+            style={{ 
+              top: el.top, 
+              left: el.left, 
+              right: el.right, 
+              bottom: el.bottom,
+              opacity: 0 
+            }}
+            animate={{ 
+              opacity: [0, 0.3, 0.2, 0.3],
+              scale: [0.8, 1, 0.9, 1]
+            }}
+            transition={{ 
+              delay: el.delay,
+              duration: 8,
+              repeat: Infinity,
+              repeatType: "reverse"
+            }}
+          />
+        ))}
+      </div>
+      
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: isLoaded ? 1 : 0 }}
+        transition={{ duration: 1 }}
+        className="container mx-auto max-w-4xl text-center relative z-0"
+      >
         {/* Floating decorative elements - z-index lower than content */}
         <div className="absolute inset-0 z-0 overflow-hidden">
           {floatingIcons.map((icon, index) => (
@@ -72,7 +124,8 @@ export default function Hero() {
               key={index}
               className={`floating-icon absolute ${icon.className} pointer-events-none`}
               animate={{ 
-                y: [0, -icon.yOffset, 0] 
+                y: [0, -icon.yOffset, 0],
+                x: index % 3 === 0 ? [0, 5, 0] : index % 3 === 1 ? [0, -5, 0] : [0, 0, 0]
               }}
               transition={{ 
                 repeat: Infinity, 
@@ -95,25 +148,30 @@ export default function Hero() {
         <motion.div 
           className="relative inline-block mb-8 z-10"
           initial={{ opacity: 0, scale: 0.8 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5 }}
+          animate={{ opacity: isLoaded ? 1 : 0, scale: isLoaded ? 1 : 0.8 }}
+          transition={{ duration: 0.8, delay: 0.2 }}
         >
           <img 
             src="https://i.imgur.com/fW5b19z.jpeg" 
             alt="Cleitin - Full-Stack Developer" 
             className="w-40 h-40 object-cover rounded-full shadow-lg border-4 border-white" 
           />
-          <div className="absolute -bottom-2 -right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md">
+          <motion.div 
+            className="absolute -bottom-2 -right-2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full shadow-md"
+            initial={{ scale: 0 }}
+            animate={{ scale: isLoaded ? 1 : 0 }}
+            transition={{ duration: 0.5, delay: 0.6, type: "spring" }}
+          >
             Available
-          </div>
+          </motion.div>
         </motion.div>
         
         {/* Headline and intro - higher z-index */}
         <motion.h1 
           className="text-4xl md:text-5xl font-bold mb-4 text-shadow relative z-10"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+          transition={{ duration: 0.7, delay: 0.4 }}
         >
           Hi, I'm Cleitin!
         </motion.h1>
@@ -121,8 +179,8 @@ export default function Hero() {
         <motion.p 
           className="text-xl md:text-2xl text-gray-600 mb-8 relative z-10"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+          transition={{ duration: 0.7, delay: 0.5 }}
         >
           Full-Stack Developer & AI Specialist
         </motion.p>
@@ -131,8 +189,8 @@ export default function Hero() {
         <motion.div 
           className="mb-10 relative z-10"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+          transition={{ duration: 0.7, delay: 0.6 }}
         >
           <a 
             href="https://wa.link/xq9r4b"
@@ -157,14 +215,14 @@ export default function Hero() {
         
         {/* Trust badge - higher z-index */}
         <motion.div 
-          className="inline-block bg-gray-100 rounded-full px-4 py-2 text-sm font-medium text-gray-700 shadow-sm relative z-10"
+          className="inline-block bg-white rounded-full px-4 py-2 text-sm font-medium text-gray-700 shadow-sm relative z-10"
           initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.5 }}
+          animate={{ opacity: isLoaded ? 1 : 0, y: isLoaded ? 0 : 20 }}
+          transition={{ duration: 0.7, delay: 0.7 }}
         >
           80+ Happy Clients
         </motion.div>
-      </div>
+      </motion.div>
     </section>
   );
 }

@@ -1,26 +1,37 @@
 import { useState, useEffect, useRef } from "react";
-import { motion } from "framer-motion";
+import { motion, useScroll, useTransform } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
 export default function AboutMe() {
   const containerRef = useRef<HTMLDivElement>(null);
   const [activeSection, setActiveSection] = useState(0);
   
+  // For parallax effect
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start end", "end start"]
+  });
+  
+  const parallaxY1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
+  const parallaxY2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const parallaxY3 = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const parallaxY4 = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  
   // For section visibility
   const [section1Ref, section1IsVisible] = useIntersectionObserver({
-    threshold: 0.5,
+    threshold: 0.3,
     triggerOnce: false,
   });
   const [section2Ref, section2IsVisible] = useIntersectionObserver({
-    threshold: 0.5,
+    threshold: 0.3,
     triggerOnce: false,
   });
   const [section3Ref, section3IsVisible] = useIntersectionObserver({
-    threshold: 0.5,
+    threshold: 0.3,
     triggerOnce: false,
   });
   const [section4Ref, section4IsVisible] = useIntersectionObserver({
-    threshold: 0.5,
+    threshold: 0.3,
     triggerOnce: false,
   });
 
@@ -28,38 +39,42 @@ export default function AboutMe() {
     {
       id: "who",
       title: "Who I Am",
-      color: "text-primary bg-white",
-      headerBg: "bg-primary text-white",
+      color: "bg-white",
+      textColor: "text-gray-800",
       content: "Hey! I'm Cleitin, a Full-Stack developer with a passion for creating beautiful, functional websites and applications that solve real-world problems.",
       ref: section1Ref,
-      isVisible: section1IsVisible
+      isVisible: section1IsVisible,
+      parallaxY: parallaxY1
     },
     {
       id: "expertise",
       title: "My Expertise",
-      color: "text-secondary bg-gray-900 text-white",
-      headerBg: "bg-secondary text-white",
+      color: "bg-gray-100",
+      textColor: "text-gray-800",
       content: "With deep expertise in CSS & C++, I build high-performance solutions that not only look great but run smoothly across all platforms and devices.",
       ref: section2Ref,
-      isVisible: section2IsVisible
+      isVisible: section2IsVisible,
+      parallaxY: parallaxY2
     },
     {
       id: "ai",
       title: "AI Specialization",
-      color: "text-accent bg-white",
-      headerBg: "bg-accent text-white",
+      color: "bg-white",
+      textColor: "text-gray-800",
       content: "I create prompt engineering systems for AI that enhance productivity and unlock new capabilities for businesses looking to leverage cutting-edge technology.",
       ref: section3Ref,
-      isVisible: section3IsVisible
+      isVisible: section3IsVisible,
+      parallaxY: parallaxY3
     },
     {
       id: "mission",
       title: "My Mission",
-      color: "text-primary bg-gray-800 text-white",
-      headerBg: "bg-primary text-white",
+      color: "bg-gray-100",
+      textColor: "text-gray-800",
       content: "My mission is to deliver high-impact digital solutions that transform ideas into reality, helping businesses grow and succeed in the digital landscape.",
       ref: section4Ref,
-      isVisible: section4IsVisible
+      isVisible: section4IsVisible,
+      parallaxY: parallaxY4
     }
   ];
 
@@ -85,19 +100,40 @@ export default function AboutMe() {
   }, [section1IsVisible, section2IsVisible, section3IsVisible, section4IsVisible]);
 
   return (
-    <section id="about" className="py-20 relative overflow-hidden">
+    <section id="about" className="py-28 relative overflow-hidden">
       <div className="container mx-auto max-w-4xl px-4">
-        <h2 className="text-3xl font-bold text-center mb-16">About Me</h2>
+        <motion.h2 
+          className="text-3xl font-bold text-center mb-16"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-100px" }}
+          transition={{ duration: 0.7 }}
+        >
+          About Me
+        </motion.h2>
         
         {/* Sticky header that changes based on active section */}
-        <div className="sticky top-16 z-20 mb-8 transition-all duration-300 shadow-md hidden md:block">
-          <div className={`py-3 px-6 rounded-t-lg ${aboutSections[activeSection].headerBg}`}>
-            <h3 className="text-xl font-bold">{aboutSections[activeSection].title}</h3>
+        <motion.div 
+          className="sticky top-16 z-20 mb-8 transition-all duration-300 shadow-md hidden md:block bg-white/80 backdrop-blur-sm rounded-lg"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
+        >
+          <div className="flex justify-between items-center px-6 py-3">
+            <h3 className="text-xl font-bold text-primary">{aboutSections[activeSection].title}</h3>
+            <div className="flex space-x-2">
+              {aboutSections.map((_, index) => (
+                <span 
+                  key={index} 
+                  className={`w-2 h-2 rounded-full transition-all duration-300 ${activeSection === index ? 'bg-primary scale-125' : 'bg-gray-300'}`}
+                />
+              ))}
+            </div>
           </div>
-        </div>
+        </motion.div>
         
         {/* Scrollable sections */}
-        <div ref={containerRef} className="space-y-20">
+        <div ref={containerRef} className="space-y-32">
           {aboutSections.map((section, index) => (
             <div
               key={section.id}
@@ -106,20 +142,25 @@ export default function AboutMe() {
               className="scroll-mt-32"
             >
               <motion.div
-                className={`rounded-2xl p-8 shadow-lg ${section.color} transition duration-500`}
-                initial={{ opacity: 0, y: 50 }}
-                animate={{ 
-                  opacity: section.isVisible ? 1 : 0.5,
-                  y: section.isVisible ? 0 : 20
-                }}
-                transition={{ duration: 0.7 }}
+                className={`rounded-2xl p-8 shadow-lg ${section.color} ${section.textColor} transition duration-500 overflow-hidden relative`}
+                style={{ y: section.parallaxY }}
+                initial={{ opacity: 0, y: 80 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-100px" }}
+                transition={{ duration: 0.8 }}
               >
-                <h3 className="text-xl font-bold mb-4 md:hidden">
-                  {section.title}
-                </h3>
-                <p className="text-lg">
-                  {section.content}
-                </p>
+                {/* Decorative elements */}
+                <div className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-primary/5 to-transparent rounded-full pointer-events-none" />
+                <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-gradient-to-tr from-secondary/5 to-transparent rounded-full pointer-events-none" />
+                
+                <div className="relative z-10">
+                  <h3 className="text-2xl font-bold mb-4 text-primary">
+                    {section.title}
+                  </h3>
+                  <p className="text-lg leading-relaxed">
+                    {section.content}
+                  </p>
+                </div>
               </motion.div>
             </div>
           ))}

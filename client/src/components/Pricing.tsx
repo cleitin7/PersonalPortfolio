@@ -17,14 +17,14 @@ export default function ContactCTA() {
 
   const actionButtons: ActionButton[] = [
     {
-      text: "Falar no WhatsApp",
+      text: "Let's Talk on WhatsApp",
       href: "https://wa.link/xq9r4b",
       icon: "📱",
       bgColor: "bg-primary",
       hoverColor: "hover:bg-primary/90"
     },
     {
-      text: "Ver meus projetos no GitHub",
+      text: "View My GitHub Projects",
       href: "https://github.com/cleitin7",
       icon: "💻",
       bgColor: "bg-gray-800",
@@ -32,53 +32,60 @@ export default function ContactCTA() {
     }
   ];
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2
-      }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0 }
-  };
-
   return (
-    <section id="pricing" className="py-24 px-4 bg-gray-50 relative overflow-hidden">
-      {/* Background design elements */}
-      <div className="absolute inset-0 overflow-hidden opacity-5">
-        <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-primary"></div>
-        <div className="absolute top-20 right-10 w-20 h-20 rounded-full bg-secondary"></div>
-        <div className="absolute bottom-10 left-1/3 w-32 h-32 rounded-full bg-accent"></div>
-        <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-gray-800"></div>
+    <section id="pricing" className="py-28 px-4 bg-gray-100 relative overflow-hidden">
+      {/* Animated background elements */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {[...Array(4)].map((_, i) => (
+          <motion.div 
+            key={i}
+            className="absolute rounded-full bg-gradient-to-br blur-3xl opacity-30"
+            style={{
+              top: `${Math.random() * 100}%`,
+              left: `${Math.random() * 100}%`,
+              right: `${Math.random() * 100}%`,
+              width: `${150 + Math.random() * 300}px`,
+              height: `${150 + Math.random() * 300}px`,
+              background: i % 2 === 0 
+                ? `linear-gradient(120deg, rgba(59, 130, 246, 0.1), rgba(147, 197, 253, 0.05))` 
+                : `linear-gradient(120deg, rgba(220, 220, 220, 0.15), rgba(250, 250, 250, 0.05))`
+            }}
+            animate={{
+              x: [0, i % 2 === 0 ? 10 : -10, 0],
+              y: [0, i % 3 === 0 ? 15 : -15, 0],
+              scale: [1, 1.05, 1],
+              opacity: [0.03, 0.08, 0.03]
+            }}
+            transition={{
+              repeat: Infinity,
+              duration: 10 + i * 2,
+              repeatType: "mirror",
+              ease: "easeInOut"
+            }}
+          />
+        ))}
       </div>
       
       <div className="container mx-auto max-w-4xl relative z-10">
-        <motion.div
-          ref={ref}
-          className="text-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
+        <div ref={ref as React.RefObject<HTMLDivElement>} className="text-center">
           <motion.h2 
             className="text-3xl md:text-4xl font-bold mb-6"
-            variants={itemVariants}
-            transition={{ duration: 0.5 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.7 }}
           >
-            Vamos trabalhar juntos?
+            Let's Work Together
           </motion.h2>
           
           <motion.p 
             className="text-lg text-gray-600 mb-12 max-w-xl mx-auto"
-            variants={itemVariants}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: 0.1 }}
           >
-            Estou pronto para transformar suas ideias em realidade. Entre em contato para conversarmos sobre seu projeto!
+            I'm ready to transform your ideas into reality. Let's discuss your project and create something amazing together!
           </motion.p>
           
           <div className="flex flex-col md:flex-row gap-6 justify-center">
@@ -86,8 +93,10 @@ export default function ContactCTA() {
               <motion.div
                 key={index}
                 className="flex-1"
-                variants={itemVariants}
-                transition={{ duration: 0.6, delay: 0.2 + (index * 0.1) }}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: false, margin: "-100px" }}
+                transition={{ duration: 0.7, delay: 0.2 + (index * 0.1) }}
               >
                 <a
                   href={button.href}
@@ -106,8 +115,10 @@ export default function ContactCTA() {
           
           <motion.div
             className="mt-12"
-            variants={itemVariants}
-            transition={{ duration: 0.5, delay: 0.5 }}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: false, margin: "-100px" }}
+            transition={{ duration: 0.7, delay: 0.5 }}
           >
             <a
               href="https://wa.link/xq9r4b"
@@ -115,13 +126,13 @@ export default function ContactCTA() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <span>Marcar uma call</span>
+              <span>Schedule a Call</span>
               <span className="ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
                 📞
               </span>
             </a>
           </motion.div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

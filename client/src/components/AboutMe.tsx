@@ -12,10 +12,9 @@ export default function AboutMe() {
     offset: ["start end", "end start"]
   });
   
-  const parallaxY1 = useTransform(scrollYProgress, [0, 1], [0, -100]);
-  const parallaxY2 = useTransform(scrollYProgress, [0, 1], [0, -150]);
-  const parallaxY3 = useTransform(scrollYProgress, [0, 1], [0, -80]);
-  const parallaxY4 = useTransform(scrollYProgress, [0, 1], [0, -120]);
+  const parallaxY1 = useTransform(scrollYProgress, [0, 1], [0, -150]);
+  const parallaxY2 = useTransform(scrollYProgress, [0, 1], [0, -80]);
+  const parallaxY3 = useTransform(scrollYProgress, [0, 1], [0, -120]);
   
   // For section visibility
   const [section1Ref, section1IsVisible] = useIntersectionObserver({
@@ -30,31 +29,17 @@ export default function AboutMe() {
     threshold: 0.3,
     triggerOnce: false,
   });
-  const [section4Ref, section4IsVisible] = useIntersectionObserver({
-    threshold: 0.3,
-    triggerOnce: false,
-  });
 
   const aboutSections = [
-    {
-      id: "who",
-      title: "Who I Am",
-      color: "bg-white",
-      textColor: "text-gray-800",
-      content: "Hey! I'm Cleitin, a Full-Stack developer with a passion for creating beautiful, functional websites and applications that solve real-world problems.",
-      ref: section1Ref,
-      isVisible: section1IsVisible,
-      parallaxY: parallaxY1
-    },
     {
       id: "expertise",
       title: "My Expertise",
       color: "bg-gray-100",
       textColor: "text-gray-800",
       content: "With deep expertise in CSS & C++, I build high-performance solutions that not only look great but run smoothly across all platforms and devices.",
-      ref: section2Ref,
-      isVisible: section2IsVisible,
-      parallaxY: parallaxY2
+      ref: section1Ref,
+      isVisible: section1IsVisible,
+      parallaxY: parallaxY1
     },
     {
       id: "ai",
@@ -62,9 +47,9 @@ export default function AboutMe() {
       color: "bg-white",
       textColor: "text-gray-800",
       content: "I create prompt engineering systems for AI that enhance productivity and unlock new capabilities for businesses looking to leverage cutting-edge technology.",
-      ref: section3Ref,
-      isVisible: section3IsVisible,
-      parallaxY: parallaxY3
+      ref: section2Ref,
+      isVisible: section2IsVisible,
+      parallaxY: parallaxY2
     },
     {
       id: "mission",
@@ -72,9 +57,9 @@ export default function AboutMe() {
       color: "bg-gray-100",
       textColor: "text-gray-800",
       content: "My mission is to deliver high-impact digital solutions that transform ideas into reality, helping businesses grow and succeed in the digital landscape.",
-      ref: section4Ref,
-      isVisible: section4IsVisible,
-      parallaxY: parallaxY4
+      ref: section3Ref,
+      isVisible: section3IsVisible,
+      parallaxY: parallaxY3
     }
   ];
 
@@ -85,8 +70,7 @@ export default function AboutMe() {
       const visibleSections = [
         section1IsVisible,
         section2IsVisible,
-        section3IsVisible,
-        section4IsVisible
+        section3IsVisible
       ];
       
       const activeIndex = visibleSections.findIndex(isVisible => isVisible);
@@ -97,7 +81,7 @@ export default function AboutMe() {
 
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
-  }, [section1IsVisible, section2IsVisible, section3IsVisible, section4IsVisible]);
+  }, [section1IsVisible, section2IsVisible, section3IsVisible]);
 
   return (
     <section id="about" className="py-28 relative overflow-hidden">

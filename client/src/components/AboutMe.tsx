@@ -99,27 +99,7 @@ export default function AboutMe() {
         >
           About Me
         </motion.h2>
-        
-        {/* Sticky header that changes based on active section */}
-        <motion.div 
-          className="sticky top-16 z-20 mb-8 transition-all duration-300 shadow-md hidden md:block bg-white/80 backdrop-blur-sm rounded-lg"
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, delay: 0.3 }}
-        >
-          <div className="flex justify-between items-center px-6 py-3">
-            <h3 className="text-xl font-bold text-primary">{aboutSections[activeSection].title}</h3>
-            <div className="flex space-x-2">
-              {aboutSections.map((_, index) => (
-                <span 
-                  key={index} 
-                  className={`w-2 h-2 rounded-full transition-all duration-300 ${activeSection === index ? 'bg-primary scale-125' : 'bg-gray-300'}`}
-                />
-              ))}
-            </div>
-          </div>
-        </motion.div>
-        
+
         {/* Scrollable sections */}
         <div ref={containerRef} className="space-y-32">
           {aboutSections.map((section, index) => (

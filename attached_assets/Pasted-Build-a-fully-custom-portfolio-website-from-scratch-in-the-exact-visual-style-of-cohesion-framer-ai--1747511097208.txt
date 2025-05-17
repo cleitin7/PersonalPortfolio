@@ -1,0 +1,122 @@
+Build a fully custom portfolio website from scratch in the exact visual style of cohesion.framer.ai, but with all the personalized features, fixes and upgrades described below. Do not import any template—construct every section fresh according to these rules.
+
+1. Hero Section
+Profile photo centered:
+https://i.imgur.com/fW5b19z.jpeg
+In a rounded container with subtle shadow.
+
+Main headline: “Hi, I’m Cleitin!”
+
+Subtitle: “Full-Stack Developer & AI Specialist”
+
+Call-to-action button: “Let’s Work Together!”
+
+On hover/click, the button should expand right and reveal a 📞 emoji with smooth animation.
+
+Trust badge: “80+ Happy Clients”
+
+Floating decorative PNGs:
+
+https://i.imgur.com/RXpGKOz.png
+
+https://i.imgur.com/R1rax8O.png
+→ Multiply, mirror, rotate and scatter multiple instances of these two icons around the hero, with a very gentle up-and-down floating animation.
+
+2. About Me (Layered Scroll Animation)
+Break into 4 parts, each with its own scroll-triggered slide-in-from-bottom that overlays the previous text. Style with:
+
+Alternating light background highlights or soft color bars
+
+Bold headings for each part
+
+Ample spacing, shadows and smooth fade/slide transitions
+
+Text parts (example):
+
+“Hey! I’m Cleitin, a Full-Stack developer…”
+
+“With deep expertise in CSS & C++…”
+
+“I create prompt engineering systems for AI…”
+
+“My mission is to deliver high-impact digital solutions…”
+
+3. Client Testimonials (Carousel)
+Horizontal carousel with smooth auto/manual scroll
+
+Each slide: circular avatar + name + role + quote
+
+Avatars & data:
+
+Lucas Vieira (CTO, PixelForge) — “Cleitin went above and beyond…”
+
+Aline Moraes (CEO, BrightClick) — “The AI strategies he built saved us…”
+
+Rafael Duarte (Head of Product, NovaNext) — “Fast, clean code with style…”
+
+Add soft fade-in or slide-in animation for each testimonial
+
+4. My Stack (Flip-Cards)
+For each of these 4 items, create a two-sided flip-card:
+
+Front: official logo/icon (C++, CSS, ChatGPT, Full-Stack Dev)
+
+Back: short description of your expertise
+
+Smooth 3D flip animation
+
+Styled shadows and background
+
+5. Services (What I Offer)
+This section is only my professional services—no pricing here. Layout each block as:
+
+Left: large semi-transparent service number (01, 02, 03) with a subtle motion/hover glow
+
+Right: refined descriptive text
+
+Services:
+
+Website Design & Development
+
+Custom, responsive, high-performance websites with clean UI/UX (no standalone “UX service”).
+
+High-Converting Landing Pages
+
+Pages optimized for persuasion, speed, and conversion.
+
+AI & Prompt Engineering
+
+Tailored AI integrations, prompt frameworks, automations, and LLM-driven tools.
+
+6. Pricing / Plans (Separate Section Below “Services”)
+Two pricing cards side by side (desktop) or stacked (mobile):
+
+Website Creation – $120/month
+
+Full professional website, hosting support, monthly updates & maintenance.
+
+App Creation – $240/month
+
+End-to-end mobile/web app development, performance backend, UI, monthly support.
+
+Each card has a “Adquirir” (Hire Now) button that opens WhatsApp chat:
+https://wa.link/xq9r4b
+
+7. Contact / Footer
+Only GitHub link: https://github.com/cleitin7
+
+Remove LinkedIn & Twitter completely.
+
+Under pricing, keep “Need something more?” with a final “Book a Call” button (no icon by default; reveal 📞 on hover as above).
+
+8. Global Visual Enhancements
+Increase visual density: more shadows, subtle gradients, section backgrounds
+
+Smooth scroll-based transitions & fade-ins on all key elements
+
+Uniform typography (Inter or similar), white background, generous spacing
+
+Hover effects: buttons, cards, images
+
+Ensure full responsiveness on mobile/tablet/desktop
+

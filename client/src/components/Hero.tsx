@@ -222,6 +222,60 @@ export default function Hero() {
         >
           80+ Happy Clients
         </motion.div>
+        
+        {/* Scroll down indicator */}
+        <motion.div 
+          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ 
+            opacity: isLoaded ? 1 : 0, 
+            y: isLoaded ? 0 : -10 
+          }}
+          transition={{ 
+            duration: 0.7, 
+            delay: 0.9 
+          }}
+        >
+          <motion.div 
+            className="flex flex-col items-center cursor-pointer"
+            onClick={() => {
+              const aboutSection = document.getElementById('about');
+              if (aboutSection) {
+                aboutSection.scrollIntoView({ behavior: 'smooth' });
+              }
+            }}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <span className="text-sm font-medium text-gray-600 mb-1">Scroll Down</span>
+            <motion.div
+              animate={{ 
+                y: [0, 10, 0],
+              }}
+              transition={{ 
+                duration: 1.5, 
+                ease: "easeInOut", 
+                repeat: Infinity,
+              }}
+              className="text-primary"
+            >
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+              >
+                <path d="M12 5v14"></path>
+                <path d="m19 12-7 7-7-7"></path>
+              </svg>
+            </motion.div>
+          </motion.div>
+        </motion.div>
       </motion.div>
     </section>
   );

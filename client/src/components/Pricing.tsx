@@ -1,129 +1,126 @@
 import { motion } from "framer-motion";
 import { useIntersectionObserver } from "@/hooks/use-intersection-observer";
 
-type PricingPlan = {
-  title: string;
-  subtitle: string;
-  price: number;
-  period: string;
-  features: string[];
-  gradient: string;
-  buttonColor: string;
-  buttonHoverColor: string;
+type ActionButton = {
+  text: string;
+  href: string;
+  icon: string;
+  bgColor: string;
+  hoverColor: string;
 };
 
-export default function Pricing() {
+export default function ContactCTA() {
   const [ref, isInView] = useIntersectionObserver({
     threshold: 0.1,
     triggerOnce: false,
   });
 
-  const pricingPlans: PricingPlan[] = [
+  const actionButtons: ActionButton[] = [
     {
-      title: "Website Creation",
-      subtitle: "Professional website with ongoing support",
-      price: 120,
-      period: "/month",
-      features: [
-        "Full professional website",
-        "Hosting support",
-        "Monthly updates & maintenance",
-        "Responsive design for all devices"
-      ],
-      gradient: "bg-gradient-to-br from-primary/10 to-primary/5",
-      buttonColor: "bg-primary",
-      buttonHoverColor: "hover:bg-primary/90"
+      text: "Falar no WhatsApp",
+      href: "https://wa.link/xq9r4b",
+      icon: "📱",
+      bgColor: "bg-primary",
+      hoverColor: "hover:bg-primary/90"
     },
     {
-      title: "App Creation",
-      subtitle: "End-to-end app development solution",
-      price: 240,
-      period: "/month",
-      features: [
-        "End-to-end mobile/web app development",
-        "Performance backend implementation",
-        "Professional UI design",
-        "Monthly support & updates"
-      ],
-      gradient: "bg-gradient-to-br from-secondary/10 to-secondary/5",
-      buttonColor: "bg-secondary",
-      buttonHoverColor: "hover:bg-secondary/90"
+      text: "Ver meus projetos no GitHub",
+      href: "https://github.com/cleitin7",
+      icon: "💻",
+      bgColor: "bg-gray-800",
+      hoverColor: "hover:bg-gray-700"
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2
+      }
+    }
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: { opacity: 1, y: 0 }
+  };
+
   return (
-    <section id="pricing" className="py-20 px-4 bg-gray-50">
-      <div className="container mx-auto max-w-5xl">
-        <h2 className="text-3xl font-bold text-center mb-16">Pricing Plans</h2>
-        
-        <div ref={ref} className="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {pricingPlans.map((plan, index) => (
-            <motion.div
-              key={index}
-              className="bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition duration-300 hover:shadow-2xl hover:scale-[1.02]"
-              initial={{ opacity: 0, y: 50 }}
-              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-              transition={{ duration: 0.5, delay: index * 0.2 }}
-            >
-              <div className={`p-8 ${plan.gradient}`}>
-                <h3 className="text-2xl font-bold text-gray-800 mb-2">{plan.title}</h3>
-                <p className="text-gray-600 mb-4">{plan.subtitle}</p>
-                <div className="flex items-baseline">
-                  <span className={`text-4xl font-bold text-${plan.buttonColor.split('-')[1]}`}>
-                    ${plan.price}
-                  </span>
-                  <span className="text-gray-500 ml-2">{plan.period}</span>
-                </div>
-              </div>
-              <div className="p-8">
-                <ul className="space-y-4 mb-8">
-                  {plan.features.map((feature, idx) => (
-                    <li key={idx} className="flex items-start">
-                      <svg
-                        className="h-6 w-6 text-green-500 mr-2 flex-shrink-0"
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 13l4 4L19 7"
-                        ></path>
-                      </svg>
-                      <span>{feature}</span>
-                    </li>
-                  ))}
-                </ul>
+    <section id="pricing" className="py-24 px-4 bg-gray-50 relative overflow-hidden">
+      {/* Background design elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-5">
+        <div className="absolute -top-10 -left-10 w-40 h-40 rounded-full bg-primary"></div>
+        <div className="absolute top-20 right-10 w-20 h-20 rounded-full bg-secondary"></div>
+        <div className="absolute bottom-10 left-1/3 w-32 h-32 rounded-full bg-accent"></div>
+        <div className="absolute -bottom-10 -right-10 w-40 h-40 rounded-full bg-gray-800"></div>
+      </div>
+      
+      <div className="container mx-auto max-w-4xl relative z-10">
+        <motion.div
+          ref={ref}
+          className="text-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "visible" : "hidden"}
+        >
+          <motion.h2 
+            className="text-3xl md:text-4xl font-bold mb-6"
+            variants={itemVariants}
+            transition={{ duration: 0.5 }}
+          >
+            Vamos trabalhar juntos?
+          </motion.h2>
+          
+          <motion.p 
+            className="text-lg text-gray-600 mb-12 max-w-xl mx-auto"
+            variants={itemVariants}
+            transition={{ duration: 0.5, delay: 0.1 }}
+          >
+            Estou pronto para transformar suas ideias em realidade. Entre em contato para conversarmos sobre seu projeto!
+          </motion.p>
+          
+          <div className="flex flex-col md:flex-row gap-6 justify-center">
+            {actionButtons.map((button, index) => (
+              <motion.div
+                key={index}
+                className="flex-1"
+                variants={itemVariants}
+                transition={{ duration: 0.6, delay: 0.2 + (index * 0.1) }}
+              >
                 <a
-                  href="https://wa.link/xq9r4b"
-                  className={`block text-center ${plan.buttonColor} ${plan.buttonHoverColor} text-white font-semibold py-3 px-6 rounded-lg shadow-md w-full relative group overflow-hidden`}
+                  href={button.href}
+                  className={`block text-center ${button.bgColor} ${button.hoverColor} text-white font-semibold py-4 px-8 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 btn-expand relative overflow-hidden`}
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <span className="relative z-10">Adquirir</span>
-                  <span className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    📞
+                  <span className="relative z-10">{button.text}</span>
+                  <span className="absolute right-6 emoji-bounce">
+                    {button.icon}
                   </span>
                 </a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-        
-        <motion.div
-          className="text-center mt-12"
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.5, delay: 0.4 }}
-        >
-          <p className="text-gray-600 mb-4">Need something more?</p>
-          <button className="bg-accent hover:bg-accent/90 text-white font-semibold py-3 px-8 rounded-full shadow-md relative group overflow-hidden">
-            <span className="relative z-10">Book a Call</span>
-            <span className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              📞
-            </span>
-          </button>
+              </motion.div>
+            ))}
+          </div>
+          
+          <motion.div
+            className="mt-12"
+            variants={itemVariants}
+            transition={{ duration: 0.5, delay: 0.5 }}
+          >
+            <a
+              href="https://wa.link/xq9r4b"
+              className="inline-flex items-center text-gray-600 hover:text-primary transition-colors duration-300 group"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <span>Marcar uma call</span>
+              <span className="ml-2 opacity-0 group-hover:opacity-100 transition-all duration-300 transform group-hover:translate-x-1">
+                📞
+              </span>
+            </a>
+          </motion.div>
         </motion.div>
       </div>
     </section>

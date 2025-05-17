@@ -1,59 +1,99 @@
 import { motion } from "framer-motion";
 
 export default function Hero() {
-  // For the decorative icons
+  // Enhanced floating icons with more variety
   const floatingIcons = [
     { 
       src: "https://i.imgur.com/RXpGKOz.png", 
       className: "left-[5%] top-[20%] rotate-12 w-16 opacity-60", 
-      delay: 0 
+      delay: 0,
+      duration: 3,
+      yOffset: 10
     },
     { 
       src: "https://i.imgur.com/R1rax8O.png", 
       className: "right-[10%] top-[15%] -rotate-15 w-14 opacity-60", 
-      delay: 1.5 
+      delay: 1.5,
+      duration: 3.5,
+      yOffset: 12
     },
     { 
       src: "https://i.imgur.com/R1rax8O.png", 
       className: "left-[15%] bottom-[10%] -rotate-12 w-12 opacity-60", 
-      delay: 0.5 
+      delay: 0.5,
+      duration: 4,
+      yOffset: 8
     },
     { 
       src: "https://i.imgur.com/RXpGKOz.png", 
       className: "right-[20%] bottom-[15%] rotate-45 w-16 opacity-60", 
-      delay: 2 
+      delay: 2,
+      duration: 3.2,
+      yOffset: 11
+    },
+    // Additional floating icons
+    { 
+      src: "https://i.imgur.com/RXpGKOz.png", 
+      className: "left-[30%] top-[30%] rotate-30 w-12 opacity-40", 
+      delay: 1.2,
+      duration: 3.7,
+      yOffset: 9
+    },
+    { 
+      src: "https://i.imgur.com/R1rax8O.png", 
+      className: "right-[35%] top-[10%] -rotate-20 w-10 opacity-50", 
+      delay: 0.8,
+      duration: 4.2,
+      yOffset: 7
+    },
+    { 
+      src: "https://i.imgur.com/RXpGKOz.png", 
+      className: "left-[25%] top-[60%] rotate-15 w-14 opacity-30", 
+      delay: 2.5,
+      duration: 3.8,
+      yOffset: 13
+    },
+    { 
+      src: "https://i.imgur.com/R1rax8O.png", 
+      className: "right-[25%] bottom-[25%] -rotate-24 w-11 opacity-45", 
+      delay: 1.7,
+      duration: 4.5,
+      yOffset: 10
     }
   ];
 
   return (
     <section className="pt-32 pb-20 px-4 relative overflow-hidden">
-      <div className="container mx-auto max-w-4xl text-center relative">
-        {/* Floating decorative elements */}
-        {floatingIcons.map((icon, index) => (
-          <motion.div
-            key={index}
-            className={`floating-icon absolute ${icon.className}`}
-            animate={{ 
-              y: [0, -10, 0] 
-            }}
-            transition={{ 
-              repeat: Infinity, 
-              duration: 3,
-              delay: icon.delay,
-              ease: "easeInOut" 
-            }}
-          >
-            <img 
-              src={icon.src} 
-              alt="Decorative icon" 
-              className="w-full h-auto"
-            />
-          </motion.div>
-        ))}
+      <div className="container mx-auto max-w-4xl text-center relative z-0">
+        {/* Floating decorative elements - z-index lower than content */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+          {floatingIcons.map((icon, index) => (
+            <motion.div
+              key={index}
+              className={`floating-icon absolute ${icon.className} pointer-events-none`}
+              animate={{ 
+                y: [0, -icon.yOffset, 0] 
+              }}
+              transition={{ 
+                repeat: Infinity, 
+                duration: icon.duration,
+                delay: icon.delay,
+                ease: "easeInOut",
+                repeatType: "mirror"
+              }}
+            >
+              <img 
+                src={icon.src} 
+                alt="Decorative icon" 
+                className="w-full h-auto"
+              />
+            </motion.div>
+          ))}
+        </div>
         
-        {/* Profile image */}
+        {/* Profile image - higher z-index */}
         <motion.div 
-          className="relative inline-block mb-8"
+          className="relative inline-block mb-8 z-10"
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.5 }}
@@ -68,9 +108,9 @@ export default function Hero() {
           </div>
         </motion.div>
         
-        {/* Headline and intro */}
+        {/* Headline and intro - higher z-index */}
         <motion.h1 
-          className="text-4xl md:text-5xl font-bold mb-4 text-shadow"
+          className="text-4xl md:text-5xl font-bold mb-4 text-shadow relative z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -79,7 +119,7 @@ export default function Hero() {
         </motion.h1>
         
         <motion.p 
-          className="text-xl md:text-2xl text-gray-600 mb-8"
+          className="text-xl md:text-2xl text-gray-600 mb-8 relative z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
@@ -87,22 +127,24 @@ export default function Hero() {
           Full-Stack Developer & AI Specialist
         </motion.p>
         
-        {/* CTA Button */}
+        {/* CTA Button - higher z-index and WhatsApp link */}
         <motion.div 
-          className="mb-10"
+          className="mb-10 relative z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.4 }}
         >
-          <button className="bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-8 rounded-full shadow-md relative group overflow-hidden">
+          <a 
+            href="https://wa.link/xq9r4b"
+            className="inline-block py-4 px-10 bg-primary text-white font-semibold rounded-full shadow-lg relative group overflow-hidden transition-all duration-300 hover:shadow-primary/30 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:ring-offset-2"
+            target="_blank"
+            rel="noopener noreferrer"
+            tabIndex={0}
+            aria-label="Contact via WhatsApp"
+          >
             <span className="relative z-10">Let's Work Together!</span>
             <span 
-              className="absolute right-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-              style={{ 
-                transform: 'translateX(20px)',
-                opacity: 0,
-                transition: 'all 0.3s ease'
-              }}
+              className="absolute right-6 opacity-0 group-hover:opacity-100 transition-all duration-300 group-hover:translate-x-0 translate-x-4 z-10"
             >
               📞
             </span>
@@ -110,12 +152,12 @@ export default function Hero() {
               className="absolute inset-0 w-full h-full bg-primary group-hover:w-[calc(100%+2rem)] transition-all duration-300 ease-in-out"
               style={{ zIndex: 0 }}
             ></span>
-          </button>
+          </a>
         </motion.div>
         
-        {/* Trust badge */}
+        {/* Trust badge - higher z-index */}
         <motion.div 
-          className="inline-block bg-gray-100 rounded-full px-4 py-2 text-sm font-medium text-gray-700 shadow-sm"
+          className="inline-block bg-gray-100 rounded-full px-4 py-2 text-sm font-medium text-gray-700 shadow-sm relative z-10"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.5 }}

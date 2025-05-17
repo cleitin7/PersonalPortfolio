@@ -87,11 +87,15 @@ export default function AboutMe() {
     <section id="about" className="py-28 relative overflow-hidden">
       <div className="container mx-auto max-w-4xl px-4">
         <motion.h2 
-          className="text-3xl font-bold text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          className="text-4xl font-bold text-center mb-16 bg-gradient-to-r from-primary to-primary/70 bg-clip-text text-transparent"
+          initial={{ opacity: 0, y: 30, scale: 0.9 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.7 }}
+          transition={{ 
+            duration: 0.8, 
+            type: "spring",
+            stiffness: 100
+          }}
         >
           About Me
         </motion.h2>
@@ -126,24 +130,68 @@ export default function AboutMe() {
               className="scroll-mt-32"
             >
               <motion.div
-                className={`rounded-2xl p-8 shadow-lg ${section.color} ${section.textColor} transition duration-500 overflow-hidden relative`}
+                className={`rounded-2xl p-8 shadow-lg ${section.color} ${section.textColor} overflow-hidden relative`}
                 style={{ y: section.parallaxY }}
-                initial={{ opacity: 0, y: 80 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 100, scale: 0.95 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: false, margin: "-100px" }}
-                transition={{ duration: 0.8 }}
+                transition={{ 
+                  duration: 0.9, 
+                  type: "spring", 
+                  stiffness: 100, 
+                  damping: 20 
+                }}
+                whileHover={{ 
+                  scale: 1.03, 
+                  boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)" 
+                }}
               >
-                {/* Decorative elements */}
-                <div className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-primary/5 to-transparent rounded-full pointer-events-none" />
-                <div className="absolute -left-10 -bottom-10 w-32 h-32 bg-gradient-to-tr from-secondary/5 to-transparent rounded-full pointer-events-none" />
+                {/* Enhanced decorative elements with animations */}
+                <motion.div 
+                  className="absolute -right-10 -top-10 w-40 h-40 bg-gradient-to-br from-primary/10 to-transparent rounded-full pointer-events-none" 
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.3, 0.4, 0.3],
+                    rotate: [0, 5, 0]
+                  }}
+                  transition={{
+                    duration: 8,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
+                <motion.div 
+                  className="absolute -left-10 -bottom-10 w-32 h-32 bg-gradient-to-tr from-secondary/10 to-transparent rounded-full pointer-events-none"
+                  animate={{ 
+                    scale: [1, 1.15, 1],
+                    opacity: [0.2, 0.3, 0.2],
+                    rotate: [0, -5, 0]
+                  }}
+                  transition={{
+                    duration: 10,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: 1
+                  }}
+                />
                 
                 <div className="relative z-10">
-                  <h3 className="text-2xl font-bold mb-4 text-primary">
+                  <motion.h3 
+                    className="text-2xl font-bold mb-4 text-primary"
+                    initial={{ opacity: 0, x: -20 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    transition={{ duration: 0.5, delay: 0.2 }}
+                  >
                     {section.title}
-                  </h3>
-                  <p className="text-lg leading-relaxed">
+                  </motion.h3>
+                  <motion.p 
+                    className="text-lg leading-relaxed"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, delay: 0.4 }}
+                  >
                     {section.content}
-                  </p>
+                  </motion.p>
                 </div>
               </motion.div>
             </div>
